@@ -1,3 +1,4 @@
+# movies\urls.py
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from .views import movie_list, register, movie_detail

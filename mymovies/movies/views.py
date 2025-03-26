@@ -1,4 +1,4 @@
-#movies\views.py
+# movies\views.py
 
 from django.shortcuts import get_object_or_404, render,  redirect
 from .models import Movie, Comment

@@ -3,29 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ movie.title }}</title>
+    <style>
+        .comment-form { margin-top: 20px; }
+        textarea { width: 100%; padding: 10px; }
+    </style>
 </head>
 <body>
     <h1>{{ movie.title }}</h1>
-    <p>{{ movie.description }}</p>
     <img src="{{ movie.image.url }}" alt="{{ movie.title }}" width="300">
+    <p>{{ movie.description }}</p>
 
+    <!-- Комментарии -->
     <h2>Комментарии</h2>
     {% for comment in comments %}
         <p><strong>{{ comment.author }}</strong>: {{ comment.text }}</p>
     {% empty %}
-        <p>Комментариев пока нет.</p>
+        <p>Нет комментариев.</p>
     {% endfor %}
 
-    <h2>Добавить комментарий</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        {% if user.is_authenticated %}
+    <!-- Форма -->
+    <div class="comment-form">
+        <h3>Добавить комментарий</h3>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
             <button type="submit">Отправить</button>
-        {% else %}
-            <button type="submit" disabled>Войдите, чтобы оставить комментарий</button>
-            <p><a href="{% url 'login' %}">Войти</a> или <a href="{% url 'register' %}">Зарегистрироваться</a></p>
-        {% endif %}
-    </form>
+        </form>
+    </div>
 </body>
 </html>
