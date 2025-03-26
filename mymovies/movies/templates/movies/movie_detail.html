@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ movie.title }}</title>
+</head>
+<body>
+    <h1>{{ movie.title }}</h1>
+    <p>{{ movie.description }}</p>
+    <img src="{{ movie.image.url }}" alt="{{ movie.title }}" width="300">
+
+    <h2>Комментарии</h2>
+    {% for comment in comments %}
+        <p><strong>{{ comment.author }}</strong>: {{ comment.text }}</p>
+    {% empty %}
+        <p>Комментариев пока нет.</p>
+    {% endfor %}
+
+    <h2>Добавить комментарий</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if user.is_authenticated %}
+            <button type="submit">Отправить</button>
+        {% else %}
+            <button type="submit" disabled>Войдите, чтобы оставить комментарий</button>
+            <p><a href="{% url 'login' %}">Войти</a> или <a href="{% url 'register' %}">Зарегистрироваться</a></p>
+        {% endif %}
+    </form>
+</body>
+</html>
